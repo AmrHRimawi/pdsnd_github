@@ -12,3 +12,14 @@ This project is about exploring data related to bike share systems for three maj
 
 ### 📝 Credits
 This project was created as part of the Programming for Data Science with Python Nanodegree Program.
+
+### 📝 How to contribute
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Push your changes to your fork
+5. Submit a pull request
+6. Wait for the pull request to be reviewed
+
+### 📃 License
+This project is licensed under the MIT License
