@@ -37,6 +37,7 @@ def get_user_input(prompt, valid_inputs):
         user_input = input(prompt)
     return valid_inputs[user_input]
 
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -65,34 +66,23 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-
-    # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city])
 
     # validate mandatory columns
-    for col in MANDATORY_COL_SET:
-        if col not in df.columns:
-            print(f'Missing column \'{col}\' in \'{CITY_DATA[city]}\' file')
-            exit(1)
+    missing_cols = MANDATORY_COL_SET - set(df.columns)
+    if missing_cols:
+        print(f'Missing columns {missing_cols} in {CITY_DATA[city]} file')
+        exit(1)
 
-    # convert the Start Time column to datetime
     df[START_TIME_COL] = pd.to_datetime(df[START_TIME_COL])
-
-    # extract month and day of week from Start Time to create new columns
     df[MONTH_COL] = df[START_TIME_COL].dt.month
     df[DAY_OF_WEEK_COL] = df[START_TIME_COL].dt.day_name()
 
-    # filter by month if applicable
     if month != 'All':
-        # use the key of the months map to get the corresponding int
-        month = int(next((k for k, v in MONTH_INPUT_MAP.items() if v == month), None))
-
-        # filter by month to create the new dataframe
+        month = int(next(k for k, v in MONTH_INPUT_MAP.items() if v == month))
         df = df[df[MONTH_COL] == month]
 
-    # filter by day of week if applicable
     if day != 'All':
-        # filter by day of week to create the new dataframe
         df = df[df[DAY_OF_WEEK_COL] == day.title()]
 
     return df
