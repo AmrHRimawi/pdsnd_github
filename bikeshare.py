@@ -30,6 +30,13 @@ WEEK_DAY_INPUT_MAP = {'0': 'All', '1': 'Saturday', '2': 'Sunday', '3': 'Monday',
 CITY_DATA = {'chicago': 'chicago.csv', 'new york city': 'new_york_city.csv', 'washington': 'washington.csv'}
 
 
+def get_user_input(prompt, valid_inputs):
+    """Helper function to get valid user input."""
+    user_input = ''
+    while user_input not in valid_inputs:
+        user_input = input(prompt)
+    return valid_inputs[user_input]
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -40,24 +47,9 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = ''
-    while city not in CITY_INPUT_MAP:
-        city = input('Select city to analyze: 1- Chicago, 2- New York City 3- Washington ')
-
-    city = CITY_INPUT_MAP[city]
-
-    # get user input for month (all, january, february, ... , june)
-    month = ''
-    while month not in MONTH_INPUT_MAP:
-        month = input('Select Month filter: 1- January, 2- February, 3- March, 4- April, 5- May, 6- June, or 0 no filter ')
-    month = MONTH_INPUT_MAP[month]
-
-    # get user input for day of week (all, monday, tuesday, ... sunday)
-    day = ''
-    while day not in WEEK_DAY_INPUT_MAP:
-        day = input('Select day filter: 1- Saturday, 2- Sunday, 3- Monday, 4- Tuesday, 5- Wednesday, 6- Thursday, 7- Friday, or 0 no filter ')
-    day = WEEK_DAY_INPUT_MAP[day]
+    city = get_user_input('Select city to analyze: 1- Chicago, 2- New York City 3- Washington ', CITY_INPUT_MAP)
+    month = get_user_input('Select Month filter: 1- January, 2- February, 3- March, 4- April, 5- May, 6- June, or 0 no filter ', MONTH_INPUT_MAP)
+    day = get_user_input('Select day filter: 1- Saturday, 2- Sunday, 3- Monday, 4- Tuesday, 5- Wednesday, 6- Thursday, 7- Friday, or 0 no filter ', WEEK_DAY_INPUT_MAP)
     print('-' * 40)
     return city, month, day
 
